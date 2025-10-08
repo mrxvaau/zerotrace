@@ -3,6 +3,7 @@ import sys
 import os
 import glob
 import platform
+import shutil
 
 def find_cpp():
     cpp_files = [f for f in glob.glob("*.cpp") if f != "main.cpp"]
@@ -26,11 +27,20 @@ def get_ext_suffix():
     else:
         return ".so"
 
+def cleanup(cpp_file):
+    # Remove build folder
+    if os.path.exists("build"):
+        shutil.rmtree("build", ignore_errors=True)
+        print("[*] Removed build folder.")
+    # Remove .cpp source file
+    if os.path.exists(cpp_file):
+        os.remove(cpp_file)
+        print(f"[*] Removed source file: {cpp_file}")
+
 if __name__ == "__main__":
     cpp_file = find_cpp()
     module_name = get_ext_name(cpp_file)
 
-    # Extra compile args if you want
     extra_args = []
     if not sys.platform.startswith("win"):
         extra_args.append("-std=c++17")
@@ -51,6 +61,8 @@ if __name__ == "__main__":
         script_args=['build_ext', '--inplace'],
         zip_safe=False,
     )
+
+    cleanup(cpp_file)
 
     print(f"\n✅ Build finished! You can now run:  python run.py")
     print(f"[*] Your module is importable as:  import {module_name}\n")
