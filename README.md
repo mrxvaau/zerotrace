@@ -531,7 +531,7 @@ python run.py
 ---
 
 <p align="center">
-  Made with ❤️ by <a href="https://github.com/yourusername">YourName</a>
+  Made with ❤️ by <a href="https://github.com/mrxvaau">mrxvaau</a>
   <br>
   <sub>For educational and authorized testing purposes only</sub>
 </p>
